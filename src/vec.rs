@@ -1559,8 +1559,16 @@ macro_rules! vec_impl_spatial {
                 *self = self.normalized();
             }
             /// Is this vector normalized ? (Uses `ApproxEq`)
-            pub fn is_normalized(self) -> bool where T: ApproxEq + Sum + Real {
-                self.magnitude_squared().relative_eq(&T::one(), T::default_epsilon(), T::default_max_relative())
+            pub fn is_normalized<E>(self) -> bool
+            where
+                T: ApproxEq<Epsilon = E> + Sum + Real,
+                E: Add<Output = E>,
+            {
+                self.magnitude_squared().relative_eq(
+                    &T::one(),
+                    T::default_epsilon() + T::default_epsilon(),
+                    T::default_max_relative() + T::default_max_relative(),
+                )
             }
             /// Is this vector approximately zero ? (Uses `ApproxEq`)
             pub fn is_approx_zero(self) -> bool where T: ApproxEq + Sum + Real {
