@@ -1566,8 +1566,8 @@ macro_rules! vec_impl_spatial {
             {
                 self.magnitude_squared().relative_eq(
                     &T::one(),
-                    T::default_epsilon() + T::default_epsilon(),
-                    T::default_max_relative() + T::default_max_relative(),
+                    T::default_epsilon() + T::default_epsilon() + T::default_epsilon(),
+                    T::default_max_relative() + T::default_max_relative() + T::default_max_relative(),
                 )
             }
             /// Is this vector approximately zero ? (Uses `ApproxEq`)
